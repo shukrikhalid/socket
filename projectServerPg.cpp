@@ -157,6 +157,10 @@ try{
 	cout <<endl;
 	x++;
       }
+	for(x;x<50;x++)
+	{
+		strcpy(hantar2[x][0],"null");
+	}
 	cout<<"|____|____________________|__________|_____________|_____|"<<endl;
 	cout <<endl;
       cout << " Operation done successfully" << endl;
