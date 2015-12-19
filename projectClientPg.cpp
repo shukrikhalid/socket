@@ -16,7 +16,8 @@ using namespace std;
 int main (int argc, char *argv[])
 {	
 	system("clear");
-	char opp;
+	int sizeBuffS = 500;
+	char opp[20];
    	char login = 'a'; 
 	int x = 0;
 	int sock;
@@ -40,8 +41,8 @@ int main (int argc, char *argv[])
 		exit(1);
 	}
 
-	char hantar[2][9999];
-	char dapat[10][9999];
+	char hantar[2][sizeBuffS];
+	char dapat[10][sizeBuffS];
 	char logname[30]={""};
 
 	
@@ -91,7 +92,7 @@ while(run == 1	){
 while(login == 'a'){
 	char idlog[50];
 	char passlog[50];
-	char logsql[500];
+	char logsql[sizeBuffS];
 	system("clear");
 	cout<<endl<<endl<<endl<<endl;	
 	cout<<" ________________________________________________________"<<endl;
@@ -105,7 +106,7 @@ while(login == 'a'){
 	cout<<"  Enter Password : ";
 	cin.getline(passlog,50);
 
-	snprintf(logsql,500,"%s%s%s%s%s","SELECT * from uitm.student where stu_id = ",idlog
+	snprintf(logsql,sizeBuffS,"%s%s%s%s%s","SELECT * from uitm.student where stu_id = ",idlog
 						," and stu_password ='",passlog,"';");
 	//cout<<logsql<<endl;
 	//////////////////////////////////////
@@ -115,9 +116,9 @@ while(login == 'a'){
 	memcpy(&server.sin_addr, hp->h_addr, hp->h_length);
 	server.sin_port = htons(1026);
 	connect(sock, (struct sockaddr *) &server, sizeof (server));
-	snprintf(hantar[0],9999,"%s","login");
-	snprintf(hantar[1],9999,"%s",logsql);
-	
+	snprintf(hantar[0],sizeBuffS,"%s","login");
+	snprintf(hantar[1],sizeBuffS,"%s",logsql);
+	strcpy(dapat[0],"55");
 	write(sock, hantar, sizeof(hantar));	
 	read(sock,dapat,sizeof(dapat));
 	strcpy(logname,dapat[0]);
@@ -145,8 +146,11 @@ cout<<"|      Option 4 : Delete Student                 |"<<endl;
 cout<<"|      Option 5 : LogOut                         |"<<endl;
 cout<<"|________________________________________________|"<<endl;
 cout<<"  Enter option : ";
-cin>>opp;
-if(opp == '1'){
+
+cin>>ws;
+cin.getline(opp,20);
+strcpy(dapat[0],"");
+if(strcmp( opp,"1")== 0){
 ////////////////////////////////////////////////////////
 	system("clear");
 	cout<<endl<<"    Welcome "<<logname<<endl<<endl;	
@@ -158,7 +162,7 @@ if(opp == '1'){
 	 cout<<" ________________________________________________________"<<endl;
 	 cout<<"| ID |       Name         |Couse Code|  Tel no     | Age |"<<endl;
 	 cout<<"|____|____________________|__________|_____________|_____|"<<endl;
-char dapat2[50][10][9999];
+char dapat2[50][10][50];
 	//////////////////////////////////////
 	sock = socket (AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
@@ -166,9 +170,9 @@ char dapat2[50][10][9999];
 	memcpy(&server.sin_addr, hp->h_addr, hp->h_length);
 	server.sin_port = htons(1026);
 	connect(sock, (struct sockaddr *) &server, sizeof (server));
-	//snprintf(hantar,9999,"%s","SELECT * from uitm.student;");
-	snprintf(hantar[0],9999,"%s","1");
-	snprintf(hantar[1],9999,"%s","SELECT * from uitm.student;");
+	//snprintf(hantar,sizeBuffS,"%s","SELECT * from uitm.student;");
+	snprintf(hantar[0],sizeBuffS,"%s","1");
+	snprintf(hantar[1],sizeBuffS,"%s","SELECT * from uitm.student;");
 	write(sock, hantar, sizeof(hantar));	
 	read(sock,dapat2,sizeof(dapat2));
 	close(sock);
@@ -188,12 +192,12 @@ char dapat2[50][10][9999];
 	 cout <<endl;
       cout << "_________________________________________________________"<<endl;
 }
-else if(opp == '2'){
+else if(strcmp( opp,"2")== 0){
 
 ////////////////////////////////////////////////////
 	system("clear");
 	char input[50];
-	char in[500];
+	char in[sizeBuffS];
 	cout<<endl<<"    Welcome "<<logname<<endl<<endl;	
 	cout<<" ________________________________________________________"<<endl;
 	cout<<"|________________________________________________________|"<<endl;
@@ -213,8 +217,8 @@ else if(opp == '2'){
 	server.sin_port = htons(1026);
 	connect(sock, (struct sockaddr *) &server, sizeof (server));
 
-	snprintf(hantar[0],9999,"%s","2");
-	snprintf(hantar[1],9999,"%s",in);
+	snprintf(hantar[0],sizeBuffS,"%s","2");
+	snprintf(hantar[1],sizeBuffS,"%s",in);
 	write(sock, hantar, sizeof(hantar));	
 	read(sock,dapat,sizeof(dapat));
 	//printf("Server site : %s\n",dapat);
@@ -242,7 +246,7 @@ else if(opp == '2'){
 	cout<<" ________________________________________________________"<<endl;
 
 }
-else if(opp == '3'){
+else if(strcmp( opp,"3")== 0){
 //////////////////////////////////////////////////////////////
 
 	char id[50];
@@ -273,8 +277,8 @@ else if(opp == '3'){
 	cout<<"   Enter Student Age      : ";
 	cin.getline(age,50);
 
-	char addsql[500];
-	snprintf(addsql,500,"%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
+	char addsql[sizeBuffS];
+	snprintf(addsql,sizeBuffS,"%s%s%s%s%s%s%s%s%s%s%s%s%s%s",
 "INSERT INTO uitm.student (stu_id,stu_name,stu_course,stu_tel,stu_password,stu_age) ",
       	"VALUES (",id,",'",name,"','",course,"','",tel,"','",password,"','",age,"');");
 	//cout<<"  "<<addsql<<endl;
@@ -286,8 +290,8 @@ else if(opp == '3'){
 	server.sin_port = htons(1026);
 	connect(sock, (struct sockaddr *) &server, sizeof (server));
 
-	snprintf(hantar[0],9999,"%s","3");
-	snprintf(hantar[1],9999,"%s",addsql);
+	snprintf(hantar[0],sizeBuffS,"%s","3");
+	snprintf(hantar[1],sizeBuffS,"%s",addsql);
 	write(sock, hantar, sizeof(hantar));	
 	read(sock,dapat,sizeof(dapat));
 	if(strcmp(dapat[0],"404")==0){
@@ -310,7 +314,7 @@ else if(opp == '3'){
 	cout<<endl;
 
 }
-else if(opp == '4'){
+else if(strcmp( opp,"4")== 0){
 ///////////////////////////////////////////////////////////////////
 	system("clear");
 	cout<<endl<<"    Welcome "<<logname<<endl<<endl;
@@ -324,8 +328,8 @@ else if(opp == '4'){
 	cin>> ws;
 	cin.getline(idd,50);
 
-	char delsql[500];
-	snprintf(delsql,500,"%s%s",
+	char delsql[sizeBuffS];
+	snprintf(delsql,sizeBuffS,"%s%s",
 		"DELETE from uitm.student where stu_id = ",idd);
 	//cout<<"  "<<delsql<<endl;
 	//////////////////////////////////////
@@ -336,8 +340,8 @@ else if(opp == '4'){
 	server.sin_port = htons(1026);
 	connect(sock, (struct sockaddr *) &server, sizeof (server));
 
-	snprintf(hantar[0],9999,"%s","4");
-	snprintf(hantar[1],9999,"%s",delsql);
+	snprintf(hantar[0],sizeBuffS,"%s","4");
+	snprintf(hantar[1],sizeBuffS,"%s",delsql);
 	write(sock, hantar, sizeof(hantar));	
 	read(sock,dapat,sizeof(dapat));
 	close(sock);
@@ -359,7 +363,7 @@ else if(opp == '4'){
 	cout<<" ________________________________________________________"<<endl;
 	cout<<endl;
 }
-else if(opp == '5'){
+else if(strcmp( opp,"5")== 0){
 	login='a';
 }
 else {
@@ -381,7 +385,7 @@ else {
 
 
 
-//snprintf(hantar,9999,"%c",opp);
+//snprintf(hantar,sizeBuffS,"%c",opp);
 }
 
 	return 0;
