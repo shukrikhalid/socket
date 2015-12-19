@@ -178,7 +178,7 @@ char dapat2[50][10][50];
 	close(sock);
 	//////////////////////////////////////
 	for (int x = 0;x<50;x++) {
-	if(strcmp(dapat2[x][0],"")!=0){
+	if(strcmp(dapat2[x][0],"null")!=0){
          cout << "|"<<setw(3) << dapat2[x][0];
          cout << " |"<<setw(19) << dapat2[x][1];
          cout << " |"<<setw(9) << dapat2[x][2];
