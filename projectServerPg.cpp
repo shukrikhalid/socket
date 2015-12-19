@@ -119,7 +119,7 @@ try{
 write(mysock,hantar,sizeof(hantar));
 }
 else if(strcmp(dapat[0],"1")==0){
-char hantar2[50][10][50]={{{""}}};
+char hantar2[30][6][30]={{{""}}};
 cout<<" ________________________________________________________"<<endl;
 try{
       connection C(db);
@@ -155,11 +155,22 @@ try{
 	strncpy(hantar2[x][4],c[5].as<string>().c_str(),sizeof(hantar2[x][4]));	
          cout << " |"<<setw(4) << hantar2[x][4]<<" |";
 	cout <<endl;
+	//snprintf(hantar[0],sizeBuffS,"%s","1");
+	char cc[4];
+	snprintf(cc,4,"%d",x);	
+	strcpy(hantar2[x][5],cc);
 	x++;
       }
-	for(x;x<50;x++)
+	for(x;x<30;x++)
 	{
-		strcpy(hantar2[x][0],"null");
+		strcpy(hantar2[x][0],"nnn");
+		strcpy(hantar2[x][1],"nnn");
+		strcpy(hantar2[x][2],"nnn");
+		strcpy(hantar2[x][3],"nnn");
+		strcpy(hantar2[x][4],"nnn");
+		char cc[4];
+		snprintf(cc,4,"%d",x);
+		strcpy(hantar2[x][5],cc);
 	}
 	cout<<"|____|____________________|__________|_____________|_____|"<<endl;
 	cout <<endl;
