@@ -162,7 +162,7 @@ if(strcmp( opp,"1")== 0){
 	 cout<<" ________________________________________________________"<<endl;
 	 cout<<"| ID |       Name         |Couse Code|  Tel no     | Age |"<<endl;
 	 cout<<"|____|____________________|__________|_____________|_____|"<<endl;
-char dapat2[50][10][50];
+char dapat2[30][6][30];
 	//////////////////////////////////////
 	sock = socket (AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
@@ -177,13 +177,14 @@ char dapat2[50][10][50];
 	read(sock,dapat2,sizeof(dapat2));
 	close(sock);
 	//////////////////////////////////////
-	for (int x = 0;x<50;x++) {
-	if(strcmp(dapat2[x][0],"null")!=0){
+	for (int x = 0;x<30;x++) {
+	if(strcmp(dapat2[x][0],"nnn")!=0){
          cout << "|"<<setw(3) << dapat2[x][0];
          cout << " |"<<setw(19) << dapat2[x][1];
          cout << " |"<<setw(9) << dapat2[x][2];
          cout << " |"<<setw(12) << dapat2[x][3];
          cout << " |"<<setw(4) << dapat2[x][4]<<" |";
+	cout<<dapat2[x][5];
 	cout <<endl;
 	}
       }
