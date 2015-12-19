@@ -79,7 +79,7 @@ int main (int argc, char *argv[])
 
 	if(read(sock,dapat,sizeof(dapat))>0)
 	{
-		printf("Server site : %s\n",dapat);
+		//printf("Server site : %s\n",dapat);
 		//printf("Client site : ");
 
 	}	
