@@ -40,8 +40,9 @@ int main (int argc, char *argv[])
 		exit(1);
 	}
 
-	char hantar[9999];
-	char dapat[9999];
+	char hantar[2][9999];
+	char dapat[10][9999];
+	char logname[30]={""};
 
 	
 		
@@ -61,7 +62,8 @@ int main (int argc, char *argv[])
 
 	if(x==0)
 	{
-		strcpy(hantar,"Client connetion OK..");
+		strcpy(hantar[0],"sent");
+		strcpy(hantar[1],"Client connetion OK..");
 		write(sock,hantar,sizeof(hantar));
 		x=1;
 	}
@@ -113,23 +115,28 @@ while(login == 'a'){
 	memcpy(&server.sin_addr, hp->h_addr, hp->h_length);
 	server.sin_port = htons(1026);
 	connect(sock, (struct sockaddr *) &server, sizeof (server));
-	snprintf(hantar,9999,"%s",logsql);
+	snprintf(hantar[0],9999,"%s","login");
+	snprintf(hantar[1],9999,"%s",logsql);
+	
 	write(sock, hantar, sizeof(hantar));	
 	read(sock,dapat,sizeof(dapat));
-	printf("Server site : %s\n",dapat);
+	strcpy(logname,dapat[0]);
+		
+	//printf("Server site : %s\n",dapat);
 	close(sock);
 	//////////////////////////////////////
 
 	cout<<" ________________________________________________________"<<endl;
 
-	if (strcmp(idlog,"1")==0){
-	login = 'b';
+	if (strcmp(logname,"")!=0){
+		login = 'b';
+		cout<< "    Welcome "<<logname;
 	}
 	if(login == 'a'){
 		cout<<" Invalid ID or Password !";
 	}
 }
-cout<<endl<<endl<<endl<<endl;
+cout<<endl;
 cout<<" ________________________________________________"<<endl;
 cout<<"|      Option 1 : List Student                   |"<<endl;
 cout<<"|      Option 2 : Search Student                 |"<<endl;
@@ -142,7 +149,7 @@ cin>>opp;
 if(opp == '1'){
 ////////////////////////////////////////////////////////
 	system("clear");
-	cout<<endl<<endl<<endl<<endl;	
+	cout<<endl<<"    Welcome "<<logname<<endl<<endl;	
 	cout<<" ________________________________________________________"<<endl;
 	cout<<"|________________________________________________________|"<<endl;
 	cout<<"|   List Student                                         |"<<endl;
@@ -151,7 +158,7 @@ if(opp == '1'){
 	 cout<<" ________________________________________________________"<<endl;
 	 cout<<"| ID |       Name         |Couse Code|  Tel no     | Age |"<<endl;
 	 cout<<"|____|____________________|__________|_____________|_____|"<<endl;
-
+char dapat2[50][10][9999];
 	//////////////////////////////////////
 	sock = socket (AF_INET, SOCK_STREAM, 0);
 	server.sin_family = AF_INET;
@@ -159,12 +166,23 @@ if(opp == '1'){
 	memcpy(&server.sin_addr, hp->h_addr, hp->h_length);
 	server.sin_port = htons(1026);
 	connect(sock, (struct sockaddr *) &server, sizeof (server));
-	snprintf(hantar,9999,"%s","SELECT * from uitm.student;");
+	//snprintf(hantar,9999,"%s","SELECT * from uitm.student;");
+	snprintf(hantar[0],9999,"%s","1");
+	snprintf(hantar[1],9999,"%s","SELECT * from uitm.student;");
 	write(sock, hantar, sizeof(hantar));	
-	read(sock,dapat,sizeof(dapat));
-	printf("Server site : %s\n",dapat);
+	read(sock,dapat2,sizeof(dapat2));
 	close(sock);
 	//////////////////////////////////////
+	for (int x = 0;x<50;x++) {
+	if(strcmp(dapat2[x][0],"")!=0){
+         cout << "|"<<setw(3) << dapat2[x][0];
+         cout << " |"<<setw(19) << dapat2[x][1];
+         cout << " |"<<setw(9) << dapat2[x][2];
+         cout << " |"<<setw(12) << dapat2[x][3];
+         cout << " |"<<setw(4) << dapat2[x][4]<<" |";
+	cout <<endl;
+	}
+      }
 
 	 cout<<"|____|____________________|__________|_____________|_____|"<<endl;
 	 cout <<endl;
@@ -176,7 +194,7 @@ else if(opp == '2'){
 	system("clear");
 	char input[50];
 	char in[500];
-	cout<<endl<<endl<<endl<<endl;	
+	cout<<endl<<"    Welcome "<<logname<<endl<<endl;	
 	cout<<" ________________________________________________________"<<endl;
 	cout<<"|________________________________________________________|"<<endl;
 	cout<<"|   Search Student                                       |"<<endl;
@@ -194,21 +212,32 @@ else if(opp == '2'){
 	memcpy(&server.sin_addr, hp->h_addr, hp->h_length);
 	server.sin_port = htons(1026);
 	connect(sock, (struct sockaddr *) &server, sizeof (server));
-	snprintf(hantar,9999,"%s",in);
+
+	snprintf(hantar[0],9999,"%s","2");
+	snprintf(hantar[1],9999,"%s",in);
 	write(sock, hantar, sizeof(hantar));	
 	read(sock,dapat,sizeof(dapat));
-	printf("Server site : %s\n",dapat);
+	//printf("Server site : %s\n",dapat);
 	close(sock);
 	//////////////////////////////////////
 	cout<<" ________________________________________________________"<<endl;
 
+	if(strcmp(dapat[0],"404")==0){
+		cout<<"Error. ID is Integer only!"<<endl;
+	}	
+	else if(strcmp(dapat[0],"")==0){
+		cout<<"ID not found in database"<<endl;
+	}
+	else	
+	{
 
-
-         cout << "   ID = " <<endl;
-         cout << "   Name = " <<endl;
-         cout << "   Couse Code = " << endl;
-         cout << "   Tel no = " << endl;
-         cout << "   Age = " << endl;
+         cout << "   ID = " <<dapat[0]<<endl;
+         cout << "   Name = "<<dapat[1] <<endl;
+         cout << "   Couse Code = "<<dapat[2] << endl;
+         cout << "   Tel no = "<<dapat[3] << endl;
+         cout << "   Age = "<<dapat[4] << endl;
+	}
+	strcpy(dapat[0],"");
 
 	cout<<" ________________________________________________________"<<endl;
 
@@ -224,7 +253,7 @@ else if(opp == '3'){
 	char age[50];
 	
 	system("clear");
-	cout<<endl<<endl<<endl<<endl;	
+	cout<<endl<<"    Welcome "<<logname<<endl<<endl;	
 	cout<<" ________________________________________________________"<<endl;
 	cout<<"|________________________________________________________|"<<endl;
 	cout<<"|   Student Registration                                 |"<<endl;
@@ -256,10 +285,25 @@ else if(opp == '3'){
 	memcpy(&server.sin_addr, hp->h_addr, hp->h_length);
 	server.sin_port = htons(1026);
 	connect(sock, (struct sockaddr *) &server, sizeof (server));
-	snprintf(hantar,9999,"%s",addsql);
+
+	snprintf(hantar[0],9999,"%s","3");
+	snprintf(hantar[1],9999,"%s",addsql);
 	write(sock, hantar, sizeof(hantar));	
 	read(sock,dapat,sizeof(dapat));
-	printf("Server site : %s\n",dapat);
+	if(strcmp(dapat[0],"404")==0){
+		cout <<"    ______________________________________ "<<endl;
+		cout<<"      Error 1. ID is already in database \n         or"<<endl;
+		cout<<"      Error 2. ID and age is Integer only"<<endl;
+	}	
+	else	
+	{
+	cout <<"      ______________________________________ "<<endl;
+	cout <<"     |	                                    |"<<endl;
+	cout <<"     |       Registration successful        |"<<endl;
+	cout <<"     |______________________________________|"<<endl;
+	cout <<endl;
+	}
+	//printf("Server site : %s\n",dapat);
 	close(sock);
 	//////////////////////////////////////
 	cout<<"________________________________________________________"<<endl;
@@ -269,7 +313,7 @@ else if(opp == '3'){
 else if(opp == '4'){
 ///////////////////////////////////////////////////////////////////
 	system("clear");
-	cout<<endl<<endl<<endl<<endl;
+	cout<<endl<<"    Welcome "<<logname<<endl<<endl;
 	cout<<" ________________________________________________________"<<endl;
 	cout<<"|________________________________________________________|"<<endl;
 	cout<<"|   Delete Student                                       |"<<endl;
@@ -291,18 +335,43 @@ else if(opp == '4'){
 	memcpy(&server.sin_addr, hp->h_addr, hp->h_length);
 	server.sin_port = htons(1026);
 	connect(sock, (struct sockaddr *) &server, sizeof (server));
-	snprintf(hantar,9999,"%s",delsql);
+
+	snprintf(hantar[0],9999,"%s","4");
+	snprintf(hantar[1],9999,"%s",delsql);
 	write(sock, hantar, sizeof(hantar));	
 	read(sock,dapat,sizeof(dapat));
-	printf("Server site : %s\n",dapat);
 	close(sock);
 	//////////////////////////////////////
+	if(strcmp(dapat[0],"404")==0){
+		cout <<"    ______________________________________ "<<endl;
+		cout<<"          Error. ID is Integer only!        "<<endl;
+
+	}	
+	else	
+	{
+	cout <<"      ______________________________________ "<<endl;
+	cout <<"     |	                                    |"<<endl;
+	cout <<"     |         Delete successful            |"<<endl;
+	cout <<"     |______________________________________|"<<endl;
+	cout <<endl;
+	}
 
 	cout<<" ________________________________________________________"<<endl;
 	cout<<endl;
 }
 else if(opp == '5'){
 	login='a';
+}
+else {
+	system("clear");
+	cout <<endl;
+	cout <<endl;
+	cout <<"      ______________________________________ "<<endl;
+	cout <<"     |	                                    |"<<endl;
+	cout <<"     |       Option is not valid!.          |"<<endl;
+	cout <<"     |______________________________________|"<<endl;
+	cout <<endl;
+	cout <<endl;
 }
 
 
