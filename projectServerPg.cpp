@@ -14,8 +14,9 @@ using namespace std;
 using namespace pqxx;
 
 int main(int argc, char *argv[])
-{
-	char sql[99999];
+{	
+	int sizeBuffS = 500;
+	char sql[sizeBuffS];
    	char db[100]="dbname=uitm user=postgres password=root \
       		hostaddr=192.168.56.101 port=5432";
 	/*Variables*/ 
@@ -51,8 +52,8 @@ int main(int argc, char *argv[])
 	
 	do
 	{
-		char hantar[10][9999];
-		char dapat[2][9999];
+		char hantar[10][sizeBuffS];
+		char dapat[2][sizeBuffS];
 		mysock = accept(sock, (struct sockaddr *) 0, 0);
 		if(mysock == -1)
 		{
@@ -66,7 +67,14 @@ int main(int argc, char *argv[])
 			else if (rval == 0)
 				printf("Ending connection\n");
 			else	
-				{		
+				{
+if(strcmp(dapat[0],"sent")!=0){	
+cout<<endl;
+cout<<"========================================================"<<endl;
+cout<<" Option        : "<< dapat[0]<<endl;
+cout<<" Execute query : "<< dapat[1]<<endl;
+cout<<"________________________________________________________"<<endl;
+}		
 if(strcmp(dapat[0],"sent")==0){					
 	printf("Client site : %s\n",dapat[0]);
 	printf("Client site : %s\n",dapat[1]);
@@ -98,7 +106,7 @@ try{
 	//cout<<c[1].as<string>();
 	//string as=c[1].as<string>();
 	strncpy(hantar[0],c[1].as<string>().c_str(),sizeof(hantar[0]));	
-	//snprintf(hantar[0],9999,"%s",as);
+	//snprintf(hantar[0],sizeBuffS,"%s",as);
 
       }
       cout<< endl << " Operation done successfully" << endl;
@@ -111,7 +119,8 @@ try{
 write(mysock,hantar,sizeof(hantar));
 }
 else if(strcmp(dapat[0],"1")==0){
-char hantar2[50][10][9999];
+char hantar2[50][10][50]={{{""}}};
+cout<<" ________________________________________________________"<<endl;
 try{
       connection C(db);
       if (C.is_open()) {
@@ -122,6 +131,7 @@ try{
       }
       /* Create SQL statement */
       strcpy(sql ,dapat[1]);
+	
       /* Create a non-transactional object. */
       nontransaction N(C);
       
@@ -150,7 +160,7 @@ try{
 	cout<<"|____|____________________|__________|_____________|_____|"<<endl;
 	cout <<endl;
       cout << " Operation done successfully" << endl;
-      cout << "_________________________________________________________"<<endl;
+      cout << " _________________________________________________________"<<endl;
       C.disconnect ();
    }catch (const std::exception &e){
       cerr << e.what() << std::endl;
@@ -158,6 +168,7 @@ try{
 write(mysock,hantar2,sizeof(hantar2));
 }
 else if(strcmp(dapat[0],"2")==0){
+cout<<" ________________________________________________________"<<endl;
 strcpy(hantar[0],"");
 try{
 	connection C(db);
@@ -165,7 +176,7 @@ try{
       if (C.is_open()) {
          cout << " Opened database successfully: " << C.dbname() << endl<< endl;
       } else {
-         cout << "Can't open database" << endl;
+         cout << " Can't open database" << endl;
          return 1;
       }
       /* Create SQL statement */
@@ -199,6 +210,7 @@ try{
 write(mysock,hantar,sizeof(hantar));
 }
 else if(strcmp(dapat[0],"3")==0){
+cout<<" ________________________________________________________"<<endl;
 strcpy(hantar[0],"");
 try{
       connection C(db);
@@ -217,9 +229,9 @@ try{
       /* Execute SQL query */
       W.exec( sql );
       W.commit();
-      cout << " Records created successfully" << endl;
+      cout << endl<< " Records created successfully" << endl;
 	strcpy(hantar[0],"success");
-	cout<<"________________________________________________________"<<endl;
+	cout<<" ________________________________________________________"<<endl;
       C.disconnect ();
    }catch (const std::exception &e){
       cerr << e.what() << std::endl;
@@ -229,6 +241,7 @@ write(mysock,hantar,sizeof(hantar));
 }
 else if(strcmp(dapat[0],"4")==0){
 strcpy(hantar[0],"");
+cout<<" ________________________________________________________"<<endl;
 try{
       connection C(db);
       if (C.is_open()) {
@@ -246,9 +259,9 @@ try{
       /* Execute SQL query */
       W.exec( sql );
       W.commit();
-      cout << " Records deleted successfully" << endl;
+      cout << endl << " Records deleted successfully" << endl;
 	strcpy(hantar[0],"success");
-	cout<<"________________________________________________________"<<endl;
+	cout<<" ________________________________________________________"<<endl;
       C.disconnect ();
    }catch (const std::exception &e){
       cerr << e.what() << std::endl;
@@ -259,7 +272,7 @@ write(mysock,hantar,sizeof(hantar));
 
 //printf("Server site : ");
 //scanf("%s",hantar);
-//strcpy(hantar," OK..");
+strcpy(hantar[0],"");
 
 
 				}
