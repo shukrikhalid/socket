@@ -70,21 +70,30 @@ create database using pgAdmmin III
 	
 _______________________________________________________________________________________
 SERVER
+
 Debian 8.2.0-amd64
+
 	apt -get install g++ //c++ ide
 	apt -get install libpqxx-dev // for postgres library
 
 compile
+
 	g++ projectServerPg.cpp -lpqxx -lpq
+
 run
+
 	./a.out
 _______________________________________________________________________________________
 ClIENT
+
 FreeBSD-10.2-amd64
+
 	pkg install cpp //c++ ide
 	
 compile
+
 	cpp projectClientPg.cc -o c   
+
 ////note projectClientPg.cpp change to projectClientPg.cc
 
 run
