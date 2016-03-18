@@ -37,7 +37,9 @@ Debian 8.2.0-amd64 GNOME
 
 IP adress for os 192.168.56.101
 set pg_hba.conf
+
 	cd /etc/postgresql/9.4/main
+	
 	pico pg_hba.conf
 		host	all	all	127.0.0.1/32	md5
 	to
