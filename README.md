@@ -97,7 +97,9 @@ compile
 ////note projectClientPg.cpp change to projectClientPg.cc
 
 run
+
 	./c
+
 
 ////note. compile projectServerPg.cpp -lpqxx -lpq it error because 
 library for pqxx it not install in freeBsd.
